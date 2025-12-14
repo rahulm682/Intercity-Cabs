@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card, CardContent, Skeleton, Stack, Box } from '@mui/material';
 
 const RouteSkeleton = () => {
