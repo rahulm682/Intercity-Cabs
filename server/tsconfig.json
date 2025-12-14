@@ -19,5 +19,11 @@
 
     /* Remove these unless you are doing SSR with React */
     // "jsx": "react-jsx", 
-  }
+  },
+  // ADD THIS SECTION:
+  "exclude": [
+    "node_modules",
+    "src/seeder.ts",
+    "src/data" 
+  ]
 }
