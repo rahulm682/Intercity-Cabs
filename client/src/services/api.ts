@@ -40,6 +40,11 @@ export interface InquiryData {
   createdAt: string;
 }
 
+export const loginUser = async (credentials: { email: string; password: string }) => {
+  const response = await api.post('/users/login', credentials);
+  return response.data;
+};
+
 // API Functions
 export const fetchRoutes = async (): Promise<RouteData[]> => {
   const response = await api.get("/routes");

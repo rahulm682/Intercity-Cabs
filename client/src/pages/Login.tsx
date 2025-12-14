@@ -3,6 +3,7 @@ import { Container, TextField, Button, Typography, Paper, Box, Alert } from '@mu
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import { loginUser } from '../services/api';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -17,19 +18,14 @@ const Login = () => {
     setError('');
 
     try {
-      // Direct axios call (or move to api.ts)
-      const { data } = await axios.post('http://localhost:5000/api/users/login', {
-        email,
-        password,
-      });
+      const data = await loginUser({ email, password });
 
-      // Save user to context
       auth?.login(data);
       
-      // Redirect to Dashboard
       navigate('/admin/dashboard');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Login failed');
+      const errorMessage = err.response?.data?.message || 'Login failed. Check credentials.';
+      setError(errorMessage);
     }
   };
 
