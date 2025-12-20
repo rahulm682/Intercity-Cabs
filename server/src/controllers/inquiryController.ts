@@ -18,7 +18,6 @@ export const createInquiry = async (req: Request, res: Response) => {
       journeyDate,
     });
 
-    // Send Alert to Admin (You)
     const emailText = `
 New Inquiry Received!
 

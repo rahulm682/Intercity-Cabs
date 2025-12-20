@@ -8,6 +8,7 @@ import { AuthProvider } from "./context/AuthContext";
 import Footer from "./components/Footer";
 import { Box } from "@mui/system";
 import Contact from "./pages/Contact";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const theme = createTheme({
   palette: {
@@ -37,7 +38,14 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />{" "}
                 <Route path="/contact" element={<Contact />} />
-                <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                <Route
+                  path="/admin/dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <AdminDashboard />
+                    </ProtectedRoute>
+                  }
+                />
               </Routes>
             </Box>
             <Footer />

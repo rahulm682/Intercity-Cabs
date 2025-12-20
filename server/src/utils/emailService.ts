@@ -1,12 +1,12 @@
-import nodemailer from 'nodemailer';
+import nodemailer from "nodemailer";
 
 const sendEmail = async (to: string, subject: string, text: string) => {
   try {
     const transporter = nodemailer.createTransport({
-      service: 'gmail', // or your hosting SMTP
+      service: "gmail",
       auth: {
-        user: process.env.EMAIL_USER, // Your Gmail
-        pass: process.env.EMAIL_PASS, // Your App Password (Not regular password)
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
     });
 
@@ -16,10 +16,10 @@ const sendEmail = async (to: string, subject: string, text: string) => {
       subject,
       text,
     });
-    
-    console.log('📧 Email sent successfully');
+
+    console.log("📧 Email sent successfully");
   } catch (error) {
-    console.error('❌ Email failed:', error);
+    console.error("❌ Email failed:", error);
   }
 };
 

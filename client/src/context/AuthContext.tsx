@@ -1,47 +1,52 @@
-import { createContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useState, useEffect, ReactNode } from "react";
 
 interface User {
   _id: string;
   name: string;
   email: string;
-  isAdmin: boolean;
   token: string;
+  isAdmin: boolean;
 }
 
 interface AuthContextType {
   user: User | null;
   login: (userData: User) => void;
   logout: () => void;
+  loading: boolean;
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  // We don't use useNavigate here directly to avoid routing conflicts outside Router
-  
-  // Check for token on app load
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    const userInfo = localStorage.getItem('userInfo');
-    if (userInfo) {
-      setUser(JSON.parse(userInfo));
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (error) {
+        console.error("Failed to parse user data");
+        localStorage.removeItem("user");
+      }
     }
+    setLoading(false);
   }, []);
 
   const login = (userData: User) => {
-    localStorage.setItem('userInfo', JSON.stringify(userData));
     setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData));
   };
 
   const logout = () => {
-    localStorage.removeItem('userInfo');
     setUser(null);
-    window.location.href = '/login'; // Hard redirect to clear state cleanly
+    localStorage.removeItem("user");
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
-      {children}
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 };

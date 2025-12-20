@@ -14,7 +14,7 @@ import { sendInquiry } from "../services/api";
 interface Props {
   open: boolean;
   onClose: () => void;
-  routeInfo: string; // "Surat to Mumbai"
+  routeInfo: string;
 }
 
 const BookingDialog: React.FC<Props> = ({ open, onClose, routeInfo }) => {

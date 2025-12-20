@@ -13,14 +13,17 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import WhatsAppButton from "./WhatsAppButton";
 
 const Footer = () => {
+  const TITLE = import.meta.env.VITE_APP_TITLE;
+  const PHONE = import.meta.env.VITE_APP_PHONE;
+  const ADDRESS = import.meta.env.VITE_APP_ADDRESS;
+
   return (
     <Box sx={{ bgcolor: "#1a202c", color: "white", py: 6, mt: "auto" }}>
       <Container maxWidth="lg">
         <Grid container spacing={4}>
-          {/* Column 1: Brand */}
           <Grid size={{ xs: 12, md: 4 }}>
             <Typography variant="h6" fontWeight="bold" gutterBottom>
-              Intercity Cabs
+              {TITLE}
             </Typography>
             <Typography variant="body2" color="grey.400">
               Your trusted partner for comfortable intercity travel between
@@ -28,7 +31,6 @@ const Footer = () => {
             </Typography>
           </Grid>
 
-          {/* Column 2: Quick Links */}
           <Grid size={{ xs: 12, md: 4 }}>
             <Typography variant="h6" fontWeight="bold" gutterBottom>
               Quick Links
@@ -40,22 +42,21 @@ const Footer = () => {
               <Link href="/contact" color="inherit" underline="hover">
                 Contact Us
               </Link>
-              <Link href="/login" color="inherit" underline="hover">
+              {/* <Link href="/login" color="inherit" underline="hover">
                 Admin Login
-              </Link>
+              </Link> */}
             </Stack>
           </Grid>
 
-          {/* Column 3: Contact */}
           <Grid size={{ xs: 12, md: 4 }}>
             <Typography variant="h6" fontWeight="bold" gutterBottom>
               Contact Us
             </Typography>
             <Typography variant="body2" color="grey.400">
-              📍 Aman society, Maroli Bazar, Ponsara Road, Navsari - 396436
+              📍 {ADDRESS}
             </Typography>
             <Typography variant="body2" color="grey.400">
-              📞 +91 98765 43210
+              📞 {PHONE}
             </Typography>
 
             <Box mt={2}>
@@ -80,7 +81,7 @@ const Footer = () => {
           align="center"
           sx={{ mt: 5 }}
         >
-          © {new Date().getFullYear()} Intercity Cabs. All rights reserved.
+          © {new Date().getFullYear()} {TITLE}. All rights reserved.
         </Typography>
       </Container>
     </Box>

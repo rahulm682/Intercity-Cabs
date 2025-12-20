@@ -1,15 +1,12 @@
 import axios from "axios";
 
-// Create a configured instance of axios
 const api = axios.create({
-  // If you run frontend on port 5173 and backend on 5000:
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// Define the Shape of a Route (TypeScript Interface)
 export interface RouteData {
   _id: string;
   source: string;
@@ -40,8 +37,11 @@ export interface InquiryData {
   createdAt: string;
 }
 
-export const loginUser = async (credentials: { email: string; password: string }) => {
-  const response = await api.post('/users/login', credentials);
+export const loginUser = async (credentials: {
+  email: string;
+  password: string;
+}) => {
+  const response = await api.post("/users/login", credentials);
   return response.data;
 };
 
@@ -58,7 +58,7 @@ export const createRoute = async (
 ) => {
   const config = {
     headers: {
-      Authorization: `Bearer ${token}`, // Attach the "Key"
+      Authorization: `Bearer ${token}`,
     },
   };
   const response = await api.post("/routes", routeData, config);
