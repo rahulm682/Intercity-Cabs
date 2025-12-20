@@ -17,6 +17,10 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
   const navigate = useNavigate();
   const auth = useContext(AuthContext);
 
@@ -29,6 +33,7 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setError("");
 
     try {
       const data = await loginUser({ email, password });
@@ -36,7 +41,11 @@ const Login = () => {
       auth?.login(data);
 
       navigate("/admin/dashboard");
+
+      navigate("/admin/dashboard");
     } catch (err: any) {
+      const errorMessage =
+        err.response?.data?.message || "Login failed. Check credentials.";
       const errorMessage =
         err.response?.data?.message || "Login failed. Check credentials.";
       setError(errorMessage);
@@ -45,6 +54,15 @@ const Login = () => {
 
   return (
     <Container maxWidth="xs" sx={{ mt: 8 }}>
+      <Paper
+        elevation={3}
+        sx={{
+          p: 4,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
       <Paper
         elevation={3}
         sx={{
@@ -64,6 +82,17 @@ const Login = () => {
           </Alert>
         )}
 
+        {error && (
+          <Alert severity="error" sx={{ width: "100%", mb: 2 }}>
+            {error}
+          </Alert>
+        )}
+
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{ mt: 1, width: "100%" }}
+        >
         <Box
           component="form"
           onSubmit={handleSubmit}
@@ -102,3 +131,4 @@ const Login = () => {
 };
 
 export default Login;
+
