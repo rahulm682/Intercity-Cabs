@@ -1,9 +1,17 @@
-import React, { useState } from 'react';
-import { 
-  Dialog, DialogTitle, DialogContent, DialogActions, 
-  TextField, Button, Rating, Typography, Alert, Box 
-} from '@mui/material';
-import { createFeedback } from '../services/api';
+import React, { useState } from "react";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  Button,
+  Rating,
+  Typography,
+  Alert,
+  Box,
+} from "@mui/material";
+import { createFeedback } from "../services/api";
 
 interface Props {
   open: boolean;
@@ -11,22 +19,22 @@ interface Props {
 }
 
 const FeedbackDialog: React.FC<Props> = ({ open, onClose }) => {
-  const [form, setForm] = useState({ name: '', rating: 5, comment: '' });
-  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [form, setForm] = useState({ name: "", rating: 5, comment: "" });
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
 
   const handleSubmit = async () => {
     if (!form.name || !form.comment) return;
-    
+
     try {
       await createFeedback(form);
-      setStatus('success');
+      setStatus("success");
       setTimeout(() => {
         onClose();
-        setStatus('idle');
-        setForm({ name: '', rating: 5, comment: '' }); // Reset
+        setStatus("idle");
+        setForm({ name: "", rating: 5, comment: "" });
       }, 2000);
     } catch (error) {
-      setStatus('error');
+      setStatus("error");
     }
   };
 
@@ -34,15 +42,24 @@ const FeedbackDialog: React.FC<Props> = ({ open, onClose }) => {
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
       <DialogTitle>Rate Your Experience</DialogTitle>
       <DialogContent>
-        {status === 'success' ? (
+        {status === "success" ? (
           <Alert severity="success" sx={{ mt: 1 }}>
             Thanks! Your review is pending approval.
           </Alert>
         ) : (
           <>
-            {status === 'error' && <Alert severity="error" sx={{ mb: 2 }}>Submission failed.</Alert>}
-            
-            <Box display="flex" flexDirection="column" alignItems="center" my={2}>
+            {status === "error" && (
+              <Alert severity="error" sx={{ mb: 2 }}>
+                Submission failed.
+              </Alert>
+            )}
+
+            <Box
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              my={2}
+            >
               <Typography component="legend">Tap to Rate</Typography>
               <Rating
                 name="simple-controlled"
@@ -61,9 +78,9 @@ const FeedbackDialog: React.FC<Props> = ({ open, onClose }) => {
               fullWidth
               variant="outlined"
               value={form.name}
-              onChange={(e) => setForm({...form, name: e.target.value})}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
             />
-            
+
             <TextField
               margin="dense"
               label="Share your experience..."
@@ -72,15 +89,17 @@ const FeedbackDialog: React.FC<Props> = ({ open, onClose }) => {
               rows={3}
               variant="outlined"
               value={form.comment}
-              onChange={(e) => setForm({...form, comment: e.target.value})}
+              onChange={(e) => setForm({ ...form, comment: e.target.value })}
             />
           </>
         )}
       </DialogContent>
       <DialogActions>
-        {status !== 'success' && (
+        {status !== "success" && (
           <>
-            <Button onClick={onClose} color="inherit">Cancel</Button>
+            <Button onClick={onClose} color="inherit">
+              Cancel
+            </Button>
             <Button onClick={handleSubmit} variant="contained" color="primary">
               Submit Review
             </Button>

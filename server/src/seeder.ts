@@ -1,10 +1,10 @@
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import users from './data/users.js';
-import routes from './data/routes.js';
-import User from './models/User.js';
-import Route from './models/Route.js';
-import connectDB from './config/db.js';
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import users from "./data/users.js";
+import routes from "./data/routes.js";
+import User from "./models/User.js";
+import Route from "./models/Route.js";
+import connectDB from "./config/db.js";
 
 dotenv.config();
 connectDB();
@@ -18,7 +18,7 @@ const importData = async () => {
     // 2. Insert Users ONE BY ONE to trigger pre-save hooks (Hashing)
     // We cannot use insertMany here if we want the middleware to run
     let adminUser = null;
-    
+
     for (const user of users) {
       const createdUser = await User.create(user);
       // Assume the first user in your list is the admin for linking routes
@@ -33,7 +33,7 @@ const importData = async () => {
     // 4. Insert Routes (Routes don't have middleware, so insertMany is fine here)
     await Route.insertMany(sampleRoutes);
 
-    console.log('✅ Data Imported Successfully (Passwords Hashed)!');
+    console.log("✅ Data Imported Successfully (Passwords Hashed)!");
     process.exit();
   } catch (error) {
     console.error(`❌ Error: ${error}`);
@@ -46,7 +46,7 @@ const destroyData = async () => {
     await Route.deleteMany();
     await User.deleteMany();
 
-    console.log('🛑 Data Destroyed!');
+    console.log("🛑 Data Destroyed!");
     process.exit();
   } catch (error) {
     console.error(`❌ Error: ${error}`);
@@ -54,7 +54,7 @@ const destroyData = async () => {
   }
 };
 
-if (process.argv[2] === '-d') {
+if (process.argv[2] === "-d") {
   destroyData();
 } else {
   importData();

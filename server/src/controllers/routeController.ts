@@ -1,16 +1,17 @@
-import type { Request, Response } from 'express';
-import Route from '../models/Route.js'; // The model we created earlier
+import type { Request, Response } from "express";
+import Route from "../models/Route.js"; // The model we created earlier
 
 // @desc    Get all routes
 // @route   GET /api/routes
 // @access  Public
 export const getRoutes = async (req: Request, res: Response) => {
   try {
-    // Return only available routes, sorted by newest first
-    const routes = await Route.find({ isAvailable: true }).sort({ createdAt: -1 });
+    const routes = await Route.find({ isAvailable: true }).sort({
+      createdAt: -1,
+    });
     res.json(routes);
   } catch (error) {
-    res.status(500).json({ message: 'Server Error' });
+    res.status(500).json({ message: "Server Error" });
   }
 };
 
@@ -20,9 +21,8 @@ export const getRoutes = async (req: Request, res: Response) => {
 export const createRoute = async (req: Request, res: Response) => {
   const { source, destination, price, vehicleType, description } = req.body;
 
-  // Validation
   if (!source || !destination || !price) {
-    return res.status(400).json({ message: 'Please add all required fields' });
+    return res.status(400).json({ message: "Please add all required fields" });
   }
 
   try {
@@ -35,7 +35,7 @@ export const createRoute = async (req: Request, res: Response) => {
     });
     res.status(201).json(route);
   } catch (error) {
-    res.status(400).json({ message: 'Invalid route data' });
+    res.status(400).json({ message: "Invalid route data" });
   }
 };
 
@@ -60,10 +60,10 @@ export const updateRoute = async (req: Request, res: Response) => {
       const updatedRoute = await route.save();
       res.json(updatedRoute);
     } else {
-      res.status(404).json({ message: 'Route not found' });
+      res.status(404).json({ message: "Route not found" });
     }
   } catch (error) {
-    res.status(400).json({ message: 'Invalid data' });
+    res.status(400).json({ message: "Invalid data" });
   }
 };
 
@@ -73,11 +73,11 @@ export const updateRoute = async (req: Request, res: Response) => {
 export const deleteRoute = async (req: Request, res: Response) => {
   try {
     const route = await Route.findById(req.params.id);
-    if (!route) return res.status(404).json({ message: 'Route not found' });
+    if (!route) return res.status(404).json({ message: "Route not found" });
 
     await route.deleteOne();
-    res.json({ message: 'Route removed' });
+    res.json({ message: "Route removed" });
   } catch (error) {
-    res.status(500).json({ message: 'Server Error' });
+    res.status(500).json({ message: "Server Error" });
   }
 };

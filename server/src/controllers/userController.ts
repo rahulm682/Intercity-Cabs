@@ -1,11 +1,11 @@
-import { Request, Response } from 'express';
-import User from '../models/User.js';
-import jwt from 'jsonwebtoken';
+import { Request, Response } from "express";
+import User from "../models/User.js";
+import jwt from "jsonwebtoken";
 
 // Generate JWT Utility
 const generateToken = (id: string) => {
   return jwt.sign({ id }, process.env.JWT_SECRET as string, {
-    expiresIn: '30d',
+    expiresIn: "30d",
   });
 };
 
@@ -26,6 +26,6 @@ export const authUser = async (req: Request, res: Response) => {
       token: generateToken(user._id.toString()),
     });
   } else {
-    res.status(401).json({ message: 'Invalid email or password' });
+    res.status(401).json({ message: "Invalid email or password" });
   }
 };

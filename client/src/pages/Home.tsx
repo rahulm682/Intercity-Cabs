@@ -28,9 +28,10 @@ const Home = () => {
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Dialog State
-  const [selectedRoute, setSelectedRoute] = useState<string | null>(null); // Stores "Surat to Mumbai"
+  const [selectedRoute, setSelectedRoute] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const TITLE = import.meta.env.VITE_APP_TITLE;
 
   useEffect(() => {
     const loadRoutes = async () => {
@@ -64,13 +65,12 @@ const Home = () => {
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Helmet>
-        <title>Intercity Cabs | Surat to Mumbai Taxi Service</title>
+        <title>{TITLE} | Surat to Mumbai Taxi Service</title>
         <meta
           name="description"
           content="Book affordable one-way and round-trip cabs from Surat to Mumbai, Ahmedabad, and more. AC Sedans and SUVs available."
         />
       </Helmet>
-      {/* Hero Title */}
       <Box mb={4} textAlign="center">
         <Typography variant="h3" component="h1" gutterBottom fontWeight="800">
           Premium Intercity Rides
@@ -80,7 +80,6 @@ const Home = () => {
         </Typography>
       </Box>
 
-      {/* Loading & Error States */}
       {loading && (
         <Grid container spacing={3}>
           {[1, 2, 3, 4, 5, 6].map((n) => (
@@ -111,10 +110,9 @@ const Home = () => {
         />
       </Box>
 
-      {/* Routes Grid */}
       {!loading && !error && (
         <>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} mb={8}>
             {displayedRoutes.map((route) => (
               <Grid key={route._id} size={{ xs: 12, sm: 6, md: 4 }}>
                 <RouteCard
@@ -137,12 +135,10 @@ const Home = () => {
         </>
       )}
 
-      {/* NEW: Features Section */}
       <Box mb={8}>
         <FeaturesSection />
       </Box>
 
-      {/* FEEDBACK SECTION */}
       <Box mt={8} mb={4}>
         <Typography
           variant="h4"
